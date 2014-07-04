@@ -69,7 +69,7 @@ public class SudokuBoard implements Board{
 		int column = getColumn(position);
 		
 		for(int i = 0; i < MAJOR_SQUARE_SIZE; i++){
-			if(puzzle[i + column] == value){
+			if(puzzle[i*MAJOR_SQUARE_SIZE + column] == value){
 				return false;
 			}
 		}
@@ -82,8 +82,9 @@ public class SudokuBoard implements Board{
 		int squarePosition = getSquarePosition(position);
 		
 		for(int column = 0; column < MINOR_SQUARE_SIZE; column++){
-			for(int row = 0; ; row+=MAJOR_SQUARE_SIZE){
-				if(puzzle[column+row+squarePosition] == value){
+			for(int row = 0; row < MAJOR_SQUARE_SIZE*3; row+=MAJOR_SQUARE_SIZE){
+				int rel = column+row+squarePosition;
+				if(puzzle[rel] == value){
 					return false;
 				}
 			}
@@ -93,8 +94,10 @@ public class SudokuBoard implements Board{
 	}
 	
 	private int getSquarePosition(int position){
-		//TODO: FALTA ISTO!
-		return (position / 6 ) * MAJOR_SQUARE_SIZE;
+		int row = getRow(position);
+		int column = getColumn(position);
+		
+		return (column%3)*3 + ((row%3)*3)*MAJOR_SQUARE_SIZE;
 	}
 	
 	private int getRow(int position){
