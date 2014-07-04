@@ -2,15 +2,15 @@ package org.pse.sudokupse.controller;
 
 import org.pse.sudokupse.model.Board;
 import org.pse.sudokupse.model.BoardPrinter;
+import org.pse.sudokupse.model.SudokuBoard;
 
 public class SudokuBoardPrinter implements BoardPrinter{
 
-	private static int SIDE_SIZE = 9;
-	private static int SEPARATOR_SIZE = 3;
+	
 	
 	public void print(Board board) {
 		int[] puzzle = board.getPuzzle();
-		if(puzzle.length != SIDE_SIZE*SIDE_SIZE){
+		if(puzzle.length != SudokuBoard.MAJOR_SQUARE_SIZE * SudokuBoard.MAJOR_SQUARE_SIZE){
 			throw new IllegalArgumentException("Invalid size!");
 		}
 		
@@ -43,7 +43,7 @@ public class SudokuBoardPrinter implements BoardPrinter{
 	}
 	
 	private boolean printVerticalSeparator(int column){
-		if((column) % SEPARATOR_SIZE == 0 && column != SIDE_SIZE){
+		if((column) % SudokuBoard.MINOR_SQUARE_SIZE == 0 && column != SudokuBoard.MAJOR_SQUARE_SIZE){
 			return true;
 		}
 		
@@ -51,7 +51,7 @@ public class SudokuBoardPrinter implements BoardPrinter{
 	}
 	
 	private boolean printHorzintalSeparator(int row, int column){
-		if((row) % SEPARATOR_SIZE == 0 && column == SIDE_SIZE && row != SIDE_SIZE){
+		if((row) % SudokuBoard.MINOR_SQUARE_SIZE == 0 && column == SudokuBoard.MAJOR_SQUARE_SIZE && row != SudokuBoard.MAJOR_SQUARE_SIZE){
 			return true;
 		}
 		
@@ -59,7 +59,7 @@ public class SudokuBoardPrinter implements BoardPrinter{
 	}
 	
 	private boolean printNewLine(int column){
-		if(column % SIDE_SIZE == 0){
+		if(column % SudokuBoard.MAJOR_SQUARE_SIZE == 0){
 			return true;
 		}
 		
@@ -67,11 +67,11 @@ public class SudokuBoardPrinter implements BoardPrinter{
 	}
 	
 	private int getRow(int puzzlePosition){
-		return puzzlePosition / SIDE_SIZE + 1;
+		return puzzlePosition / SudokuBoard.MAJOR_SQUARE_SIZE + 1;
 	}
 	
 	private int getColumn(int puzzlePosition){
-		return puzzlePosition % SIDE_SIZE + 1;
+		return puzzlePosition % SudokuBoard.MAJOR_SQUARE_SIZE + 1;
 	}
 	
 	private String getHorizontalSeparator(){

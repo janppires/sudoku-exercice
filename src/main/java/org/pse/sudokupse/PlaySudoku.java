@@ -24,5 +24,7 @@ public class PlaySudoku
     	
         Board board = new SudokuBoard(puzzle, new SudokuBoardPrinter());
         board.print();
+        
+        System.out.println(board.validate(80, 8));
     }
 }
